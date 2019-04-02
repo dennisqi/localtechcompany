@@ -6,8 +6,7 @@ const {sanitizeBody} = require('express-validator/filter');
 
 // Display list of all companies.
 exports.company_list = function (req, res, next) {
-    Company.find()
-        .exec(function(err, companies) {
+    Company.find(function(err, companies) {
             if (err) {
                 return next(next);
             }
@@ -57,7 +56,7 @@ exports.company_create_post = [
                 if (err) {
                     return next(err);
                 }
-                res.redirect(company.url);
+                res.redirect('/companies');
             });
         }
     }
