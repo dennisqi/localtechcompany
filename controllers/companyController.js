@@ -32,7 +32,7 @@ exports.company_create_get = function (req, res) {
 
 // Handle company create on POST.
 exports.company_create_post = [
-    body('name', 'Comapny name must not be empty.').isLength({ min: 1 }).trim(),
+    body('name', 'Company name must not be empty.').isLength({ min: 1 }).trim(),
     body('job_url', 'Job url must not be empty.').isLength({ min: 1 }).trim(),
     body('city', 'City must not be empty.').isLength({ min: 1 }).trim(),
     body('state', 'State must not be empty.').isLength({ min: 2, max: 2 }).trim(),
@@ -87,10 +87,44 @@ exports.company_delete_post = function (req, res, next) {
 
 // Display company update form on GET.
 exports.company_update_get = function (req, res) {
-    res.send('NOT IMPLEMENTED: company update GET');
+    Company.findById(req.params.id)
+        .exec(function(err, company) {
+            if (err) {
+                return next(err);
+            }
+            res.render('company_form', {title: 'Update Company', company: company});
+        });
 };
 
 // Handle company update on POST.
-exports.company_update_post = function (req, res) {
-    res.send('NOT IMPLEMENTED: company update POST');
-};
+exports.company_update_post = [
+    body('name', 'Company name must not be empty.').isLength({ min: 1 }).trim(),
+    body('job_url', 'Job url must not be empty.').isLength({ min: 1 }).trim(),
+    body('city', 'City must not be empty.').isLength({ min: 1 }).trim(),
+    body('state', 'State must not be empty.').isLength({ min: 2, max: 2 }).trim(),
+    sanitizeBody('state').escape(),
+    (req, res, next) => {
+        const errors = validationResult(req);
+        var company = new Company({
+            name: req.body.name,
+            job_url: req.body.job_url,
+            city: req.body.city,
+            state: req.body.state,
+            home_url: req.body.home_url,
+            _id: req.params.id
+        });
+        if (!errors.isEmpty()) {
+            res.render('company_form', {
+                name: 'Create Company', company: company, errors: errors.array()
+            });
+            return;
+        } else {
+            Company.findByIdAndUpdate(req.params.id, company, {}, function(err) {
+                if (err) {
+                    return next(err);
+                }
+                res.redirect('/companies');
+            });
+        }
+    }
+];
