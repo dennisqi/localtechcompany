@@ -1,0 +1,10 @@
+extends layout
+
+block content
+    h1 #{title}: #{company.name}
+    p Do you really want to delete this Company (#[strong !{company.name}])?
+
+    form(method='POST' action='')
+        div.form-group
+            input#companyid.form-control(type='hidden' name='companyid' required='true' value=company._id )
+        button.btn.btn-danger(type='submit') Delete

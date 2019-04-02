@@ -63,13 +63,26 @@ exports.company_create_post = [
 ];
 
 // Display company delete form on GET.
-exports.company_delete_get = function (req, res) {
-    res.send('NOT IMPLEMENTED: company delete GET');
+exports.company_delete_get = function (req, res, next) {
+    Company.findById(req.params.id)
+        .exec(function(err, company) {
+            if (err) {
+                return next(err);
+            }
+            res.render('company_delete', {title: 'Delete Company', company: company});
+            return;
+        });
 };
 
 // Handle company delete on POST.
-exports.company_delete_post = function (req, res) {
-    res.send('NOT IMPLEMENTED: company delete POST');
+exports.company_delete_post = function (req, res, next) {
+    Company.findByIdAndDelete(req.body.companyid)
+        .exec(function(err) {
+            if (err) {
+                return next(err);
+            }
+            res.redirect('/companies');
+        });
 };
 
 // Display company update form on GET.

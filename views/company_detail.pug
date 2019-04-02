@@ -12,3 +12,9 @@ block content
             p Location: !{company.city}, !{company.state}
         li
             p Home Page: !{company.home_url}
+
+    hr
+    p
+        a.text-danger(href=company.url+'/delete') Delete Company
+    p
+        a(href=company.url+'/update') Update Company
