@@ -25,7 +25,7 @@ exports.company_detail = function (req, res) {
 
 // Display company create form on GET.
 exports.company_create_get = function (req, res) {
-    res.send('NOT IMPLEMENTED: company create GET');
+    return res.render('company_form', {title: 'Create Company'});
 };
 
 // Handle company create on POST.
