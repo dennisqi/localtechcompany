@@ -5,7 +5,12 @@ block content
     ul
         each company in companies
             li
-                company.name
+                a(href=company.url) !{company.name}
+                |  (career site: 
+                a(href=company.job_url) !{company.job_url}
+                |  )
+                
+            p -- !{company.city}, !{company.state}
         else
             li
                 p There are no companies.
