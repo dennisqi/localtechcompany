@@ -1,13 +1,14 @@
 extends layout
 
 block content
-    h1= title: company.name
+    h1 !{title}: !{company.name}
     ul
         li
-            p Name: #{company.name}
+            p Name: !{company.name}
         li
-            p Careers: #{company.job_url}
+            p Careers: 
+                a(href=company.job_url target='_blank') !{company.job_url}
         li
-            p Location: #{company.city}, #{company.state}
+            p Location: !{company.city}, !{company.state}
         li
-            p Home Page: #{company.home_url}
+            p Home Page: !{company.home_url}

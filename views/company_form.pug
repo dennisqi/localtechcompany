@@ -21,26 +21,25 @@ block content
             label(for='city') Company City:
             input#city.form-control(
                 type='text' placeholder='Company City (New York)' 
-                city='city' required='true' 
+                name='city' required='true' 
                 value=(undefined===company ? '' : company.city)
             )
         div.form-group
             label(for='state') Company State:
             input#state.form-control(
                 type='text' placeholder='Company State abbr. (e.g. NY)' 
-                state='state' required='true' 
+                name='state' required='true' 
                 value=(undefined===company ? '' : company.state)
             )
         div.form-group
             label(for='home_url') Home Url:
             input#home_url.form-control(
                 type='text' placeholder='Company Home' 
-                name='home_url' required='true'
-                value=(undefined===company ? '' : company.home_url)
+                name='home_url' value=(undefined===company ? '' : company.home_url)
             )
         button.btn.btn-primary(type='submit') Submit
 
         if errors 
             ul
-            for error in errors
+            each error in errors
                 li.text-danger!= error.msg

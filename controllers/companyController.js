@@ -1,6 +1,9 @@
 var Company = require('../models/company');
 
 
+const {body, validationResult} = require('express-validator/check');
+const {sanitizeBody} = require('express-validator/filter');
+
 // Display list of all companies.
 exports.company_list = function (req, res, next) {
     Company.find()
@@ -29,9 +32,36 @@ exports.company_create_get = function (req, res) {
 };
 
 // Handle company create on POST.
-exports.company_create_post = function (req, res) {
-    res.send('NOT IMPLEMENTED: company create POST');
-};
+exports.company_create_post = [
+    body('name', 'Comapny name must not be empty.').isLength({ min: 1 }).trim(),
+    body('job_url', 'Job url must not be empty.').isLength({ min: 1 }).trim(),
+    body('city', 'City must not be empty.').isLength({ min: 1 }).trim(),
+    body('state', 'State must not be empty.').isLength({ min: 2, max: 2 }).trim(),
+    sanitizeBody('state').escape(),
+    (req, res, next) => {
+        const errors = validationResult(req);
+        var company = new Company({
+            name: req.body.name,
+            job_url: req.body.job_url,
+            city: req.body.city,
+            state: req.body.state,
+            home_url: req.body.home_url
+        });
+        if (!errors.isEmpty()) {
+            res.render('company_form', {
+                name: 'Create Company', company: company, errors: errors.array()
+            });
+            return;
+        } else {
+            company.save(function(err) {
+                if (err) {
+                    return next(err);
+                }
+                res.redirect(company.url);
+            });
+        }
+    }
+];
 
 // Display company delete form on GET.
 exports.company_delete_get = function (req, res) {
