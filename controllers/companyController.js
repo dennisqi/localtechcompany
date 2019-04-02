@@ -19,7 +19,7 @@ exports.company_detail = function (req, res) {
             if (err) {
                 return next(next);
             }
-            res.render('company_list', {title: 'Company', company: company});
+            res.render('company_detail', {title: 'Company', company: company});
         })
 };
 

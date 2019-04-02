@@ -1,0 +1,13 @@
+extends layout
+
+block content
+    h1= title: company.name
+    ul
+        li
+            p Name: #{company.name}
+        li
+            p Careers: #{company.job_url}
+        li
+            p Location: #{company.city}, #{company.state}
+        li
+            p Home Page: #{company.home_url}
