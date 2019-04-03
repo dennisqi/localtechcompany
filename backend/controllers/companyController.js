@@ -41,6 +41,7 @@ exports.company_create_post = [
     body('job_url', 'Job url must not be empty.').isLength({ min: 1 }).trim(),
     body('city', 'City must not be empty.').isLength({ min: 1 }).trim(),
     body('state', 'State should be 2 chars only (e.g. CA).').isLength({ min: 2, max: 2 }).trim(),
+    body('home_url', 'Home url must not be empty.').isLength({ min: 1 }).trim(),
     sanitizeBody('state').escape(),
     (req, res, next) => {
         const errors = validationResult(req);

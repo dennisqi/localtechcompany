@@ -9,7 +9,7 @@ var CompanySchema = new Schema(
         job_url: {type: mongoose.SchemaTypes.Url, required: true},
         city: {type: String, required: true, max: 30},
         state: {type: String, required: true, max: 2, min:2},
-        home_url: {type: mongoose.SchemaTypes.Url, required: true}
+        home_url: {type: mongoose.SchemaTypes.Url}
     }
 );
 
