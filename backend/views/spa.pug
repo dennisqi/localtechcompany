@@ -53,8 +53,8 @@ block content
                 )
             button.btn.btn-primary(type='submit') Submit
 
-    div(class='col-sm-8')
-        if errors 
-            ul
-            each error in errors
-                li.text-danger!= error.msg
+        div(class='col-sm-8')
+            if errors 
+                ul
+                each error in errors
+                    li.text-danger!= error.msg

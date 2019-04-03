@@ -26,8 +26,13 @@ exports.company_detail = function (req, res) {
 };
 
 // Display company create form on GET.
-exports.company_create_get = function (req, res) {
-    return res.render('spa', {title: 'Create Company'});
+exports.company_create_get = function (req, res, next) {
+    Company.find(function(err, companies) {
+            if (err) {
+                return next(next);
+            }
+            res.render('spa', {title: 'Companies', companies: companies});
+        })
 };
 
 // Handle company create on POST.
@@ -35,7 +40,7 @@ exports.company_create_post = [
     body('name', 'Company name must not be empty.').isLength({ min: 1 }).trim(),
     body('job_url', 'Job url must not be empty.').isLength({ min: 1 }).trim(),
     body('city', 'City must not be empty.').isLength({ min: 1 }).trim(),
-    body('state', 'State must not be empty.').isLength({ min: 2, max: 2 }).trim(),
+    body('state', 'State should be 2 chars only (e.g. CA).').isLength({ min: 2, max: 2 }).trim(),
     sanitizeBody('state').escape(),
     (req, res, next) => {
         const errors = validationResult(req);
@@ -47,9 +52,12 @@ exports.company_create_post = [
             home_url: req.body.home_url
         });
         if (!errors.isEmpty()) {
-            res.render('spa', {
-                name: 'Create Company', company: company, errors: errors.array()
-            });
+            Company.find(function(err, companies) {
+                    if (err) {
+                        return next(next);
+                    }
+                    res.render('spa', {title: 'Companies', companies: companies, company: company, errors: errors.array()});
+                });
             return;
         } else {
             company.save(function(err) {
@@ -92,7 +100,7 @@ exports.company_update_get = function (req, res) {
             if (err) {
                 return next(err);
             }
-            res.render('spa', {title: 'Update Company', company: company});
+            res.render('company_form', {title: 'Update Company', company: company});
         });
 };
 
@@ -101,7 +109,7 @@ exports.company_update_post = [
     body('name', 'Company name must not be empty.').isLength({ min: 1 }).trim(),
     body('job_url', 'Job url must not be empty.').isLength({ min: 1 }).trim(),
     body('city', 'City must not be empty.').isLength({ min: 1 }).trim(),
-    body('state', 'State must not be empty.').isLength({ min: 2, max: 2 }).trim(),
+    body('state', 'State should be 2 chars only (e.g. CA).').isLength({ min: 2, max: 2 }).trim(),
     sanitizeBody('state').escape(),
     (req, res, next) => {
         const errors = validationResult(req);
@@ -114,7 +122,7 @@ exports.company_update_post = [
             _id: req.params.id
         });
         if (!errors.isEmpty()) {
-            res.render('spa', {
+            res.render('company_form', {
                 name: 'Create Company', company: company, errors: errors.array()
             });
             return;
