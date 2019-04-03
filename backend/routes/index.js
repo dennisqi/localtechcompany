@@ -23,4 +23,6 @@ router.get('/company/:id', company_controller.company_detail);
 
 router.get('/companies', company_controller.company_list);
 
+router.post('/companies', company_controller.company_create_post);
+
 module.exports = router;
