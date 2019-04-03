@@ -27,7 +27,7 @@ exports.company_detail = function (req, res) {
 
 // Display company create form on GET.
 exports.company_create_get = function (req, res) {
-    return res.render('company_form', {title: 'Create Company'});
+    return res.render('spa', {title: 'Create Company'});
 };
 
 // Handle company create on POST.
@@ -47,7 +47,7 @@ exports.company_create_post = [
             home_url: req.body.home_url
         });
         if (!errors.isEmpty()) {
-            res.render('company_form', {
+            res.render('spa', {
                 name: 'Create Company', company: company, errors: errors.array()
             });
             return;
@@ -92,7 +92,7 @@ exports.company_update_get = function (req, res) {
             if (err) {
                 return next(err);
             }
-            res.render('company_form', {title: 'Update Company', company: company});
+            res.render('spa', {title: 'Update Company', company: company});
         });
 };
 
@@ -114,7 +114,7 @@ exports.company_update_post = [
             _id: req.params.id
         });
         if (!errors.isEmpty()) {
-            res.render('company_form', {
+            res.render('spa', {
                 name: 'Create Company', company: company, errors: errors.array()
             });
             return;
