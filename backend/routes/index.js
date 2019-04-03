@@ -25,4 +25,8 @@ router.get('/companies', company_controller.company_list);
 
 router.post('/companies', company_controller.company_create_post);
 
+router.get('/about', (req, res, next) => {
+  res.render('about');
+});
+
 module.exports = router;

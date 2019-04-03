@@ -1,60 +1,61 @@
 extends layout
 
 block content
-    div(class='col-sm-7')
-        ul
-            each company in companies
-                li
-                    a(href=company.url) !{company.name}
-                    |  (career site: 
-                    a(href=company.job_url target='_blank') !{company.job_url}
-                    |  )
-                    
-                p -- !{company.city}, !{company.state}
-            else
-                li
-                    p There are no companies.
+    div(class='row')
+        div(class='col-sm-7')
+            ul
+                each company in companies
+                    li
+                        a(href=company.url) !{company.name}
+                        |  (career site: 
+                        a(href=company.job_url target='_blank') !{company.job_url}
+                        |  )
+                        
+                    p -- !{company.city}, !{company.state}
+                else
+                    li
+                        p There are no companies.
 
-    div(class='col-sm-4')
-        form(method='POST', action='')
-            div.form-group
-                label(for='name') Company Name:
-                input#name.form-control(
-                    type='text' placeholder='Company name' 
-                    name='name' required='true'
-                    value=(undefined===company ? '' : company.name)
-                )
-            div.form-group
-                label(for='job_url') Job Url:
-                input#job_url.form-control(
-                    type='text' placeholder='Company Careers Site' 
-                    name='job_url' required='true'
-                    value=(undefined===company ? '' : company.job_url)
-                )
-            div.form-group
-                label(for='city') Company City:
-                input#city.form-control(
-                    type='text' placeholder='Company City (New York)' 
-                    name='city' required='true' 
-                    value=(undefined===company ? '' : company.city)
-                )
-            div.form-group
-                label(for='state') Company State (two-letter):
-                input#state.form-control(
-                    type='text' placeholder='Company State abbr. (e.g. NY)' 
-                    name='state' required='true' 
-                    value=(undefined===company ? '' : company.state)
-                )
-            div.form-group
-                label(for='home_url') Home Url:
-                input#home_url.form-control(
-                    type='text' placeholder='Company Home' 
-                    name='home_url' value=(undefined===company ? '' : company.home_url)
-                )
-            button.btn.btn-primary(type='submit') Submit
+        div(class='col-sm-4')
+            form(method='POST', action='')
+                div.form-group
+                    label(for='name') Company Name:
+                    input#name.form-control(
+                        type='text' placeholder='Company name' 
+                        name='name' required='true'
+                        value=(undefined===company ? '' : company.name)
+                    )
+                div.form-group
+                    label(for='job_url') Job Url:
+                    input#job_url.form-control(
+                        type='text' placeholder='Company Careers Site' 
+                        name='job_url' required='true'
+                        value=(undefined===company ? '' : company.job_url)
+                    )
+                div.form-group
+                    label(for='city') Company City:
+                    input#city.form-control(
+                        type='text' placeholder='Company City (New York)' 
+                        name='city' required='true' 
+                        value=(undefined===company ? '' : company.city)
+                    )
+                div.form-group
+                    label(for='state') Company State (two-letter):
+                    input#state.form-control(
+                        type='text' placeholder='Company State abbr. (e.g. NY)' 
+                        name='state' required='true' 
+                        value=(undefined===company ? '' : company.state)
+                    )
+                div.form-group
+                    label(for='home_url') Home Url:
+                    input#home_url.form-control(
+                        type='text' placeholder='Company Home' 
+                        name='home_url' value=(undefined===company ? '' : company.home_url)
+                    )
+                button.btn.btn-primary(type='submit') Submit
 
-        div(class='col-sm-8')
-            if errors 
-                ul
-                each error in errors
-                    li.text-danger!= error.msg
+            div(class='col-sm-8')
+                if errors 
+                    ul
+                    each error in errors
+                        li.text-danger!= error.msg
