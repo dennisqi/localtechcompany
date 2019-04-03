@@ -10,7 +10,7 @@ exports.company_list = function (req, res, next) {
             if (err) {
                 return next(next);
             }
-            res.render('company_list', {title: 'Companies', companies: companies});
+            res.render('spa', {title: 'Companies', companies: companies});
         })
 };
 
